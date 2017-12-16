@@ -172,14 +172,15 @@ let errorMsg = require('./errorMsg.json');
         let idVendas = req.body.idVendas;
         console.log(idVendas);
         if (isNaN(idVendas)) {
-            res.send(errorMsg["excluir"][0]);
+            res.send(errorMsg["excluir"][1]);
         } else {
+
             console.log(idVendas);
             let resultJson = '';
             let connection = app.infra.connectionFactory();
             let deletar = new app.infra.applicationDAO(connection);
             deletar.deleta(idVendas, function (err, results) {
-                res.end();
+                res.send(errorMsg["excluir"][0]);
             });
             connection.end();
         }
