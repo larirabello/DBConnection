@@ -140,29 +140,31 @@ let errorMsg = require('./errorMsg.json');
 
 // ---------------------- INICIO ATUALIZAR -----------------
     app.put('/vendas/editar',(req, res) => {
-        let params = req.body;
-        console.log('REQ.BODY: ', params);
-    //console.log(params);
-    let info = params["info"];
+        let venda = req.body;
+        console.log('REQ.BODY: ', venda);
+        let info = venda["info"];
 
-    console.log('params["info"]: ', params["info"]);
-    var keysInfo = [];
-    Object.keys(info).forEach(function(key) {
-        keysInfo = key;
-        console.log(keysInfo);
+        console.log('venda["info"]: ', venda["info"]);
+        let id = venda["id"];
+        console.log('venda["id"]: ', venda["id"]);
+
+        if(isNaN(venda["id"])
+            || isNaN(info["idProduto"])
+            || isNaN(info["idUsuario"])
+            || typeof info["dtVenda"] !== 'string'
+            || typeof info["statusVenda"] !== 'string'
+            || info["dtVenda"].length !== 10){
+                res.send(errorMsg["alterar"][1]);
+        } else {
+            let resultJson = '';
+            let connection = app.infra.connectionFactory();
+            let atualizar = new app.infra.applicationDAO(connection);
+            atualizar.atualiza(info, id, function (err, results) {
+                res.send(errorMsg['alterar'][0]);
+            });
+            connection.end();
+        }
     });
-        let id = params["id"];
-
-    console.log('params["id"]: ', params["id"]);
-        //console.log(id);
-        let resultJson = '';
-        let connection = app.infra.connectionFactory();
-        let atualizar = new app.infra.applicationDAO(connection);
-        atualizar.atualiza(info, id, function (err, results) {
-            res.send(errorMsg['alterar'][0]);
-        });
-        connection.end();
-});
 // ---------------------- FIM ATUALIZAR -----------------
 
 // ---------------------- INICIO DELETAR -----------------

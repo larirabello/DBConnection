@@ -22,7 +22,7 @@
     },
     {
       "codigo":"[C005]",
-      "msg":"Parametro inváido"
+      "msg":"Parâmetro inválido"
     }
   ],
   "inserir": [
@@ -32,7 +32,7 @@
     },
     {
       "codigo": "[I002]",
-      "msg": "Parametro inválido"
+      "msg": "Parâmetro inválido"
     }
   ],
   "excluir": [
